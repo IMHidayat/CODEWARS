@@ -8,11 +8,12 @@ function Fighter(name, health, damagePerAttack) {
   };
 }
 
-function declareWinner(fighter1, fighter2, firstAttacker) {
-  firstAttacker = fighter1.name === firstAttacker ? fighter1 : fighter2;
-  secondAttacker = fighter1.name !== firstAttacker ? fighter2 : fighter1;
+function declareWinner(fighter1, fighter2, first) {
+  let firstAttacker, secondAttacker;
+  fighter1.name === first
+    ? ((firstAttacker = fighter1), (secondAttacker = fighter2))
+    : ((firstAttacker = fighter2), (secondAttacker = fighter1));
 
-  console.log(secondAttacker.health + " - " + firstAttacker.damagePerAttack);
   let stat = true;
   let winner;
   while (stat) {
@@ -21,11 +22,37 @@ function declareWinner(fighter1, fighter2, firstAttacker) {
       stat = false;
     }
     if ((firstAttacker.health -= secondAttacker.damagePerAttack) <= 0) {
-      winner = firstAttacker.name;
+      winner = secondAttacker.name;
       stat = false;
     }
   }
+  console.log("winner : " + winner);
   return winner;
 }
 
-declareWinner(new Fighter("Lew", 10, 2), new Fighter("Harry", 5, 4), "Lew");
+// declareWinner(new Fighter("Lew", 10, 2), new Fighter("Harry", 5, 4), "Lew");
+// declareWinner(
+//   new Fighter("Mark", 552, 22),
+//   new Fighter("Rocky", 333, 49),
+//   "Mark"
+// );
+declareWinner(
+  new Fighter("Harald", 20, 5),
+  new Fighter("Harry", 5, 4),
+  "Harry"
+);
+declareWinner(
+  new Fighter("Harald", 20, 5),
+  new Fighter("Harry", 5, 4),
+  "Harald"
+);
+declareWinner(
+  new Fighter("Jerry", 30, 3),
+  new Fighter("Harald", 20, 5),
+  "Jerry"
+);
+declareWinner(
+  new Fighter("Jerry", 30, 3),
+  new Fighter("Harald", 20, 5),
+  "Harald"
+);
